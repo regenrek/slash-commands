@@ -24,6 +24,9 @@ argument-hint: PROMPT="<your question or task>"
 #   --include-dir "dir1,dir2"            for directories
 #   Combine both if needed
 npx codefetch --max-tokens 50000 \
+  --token-encoder o200k \
+  --disable-line-numbers \
+  --project-tree 3 \
   --include-files "src/auth/**/*,src/api/**/*" \
   --include-dir "src/utils"
 
