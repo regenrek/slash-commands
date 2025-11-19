@@ -1,9 +1,9 @@
 ---
-description: Ask GPT‑5 Pro (API) with Codefetch context
+description: Ask GPT‑5.1 Pro (API) with Codefetch context
 argument-hint: PROMPT="<your question or task>"
 ---
 
-# Ask GPT‑5 Pro (API engine)
+# Ask GPT‑5.1 Pro (API engine)
 
 ## Instructions
 
@@ -28,7 +28,7 @@ npx codefetch --max-tokens 50000 \
   --include-dir "src/utils"
 
 # 2) Ask Oracle via API (requires OPENAI_API_KEY)
-OPENAI_API_KEY=sk-... npx -y @steipete/oracle --engine api -m gpt-5-pro \
+OPENAI_API_KEY=sk-... npx -y @steipete/oracle --engine api -m gpt-5.1-pro \
   -p "$PROMPT" \
   --file codefetch/codebase.md
 

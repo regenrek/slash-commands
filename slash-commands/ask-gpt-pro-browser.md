@@ -1,9 +1,9 @@
 ---
-description: Ask GPT‑5 Pro (Browser) with Codefetch context
+description: Ask GPT‑5.1 Pro (Browser) with Codefetch context
 argument-hint: PROMPT="<your question or task>"
 ---
 
-# Ask GPT‑5 Pro (Browser engine)
+# Ask GPT‑5.1 Pro (Browser engine)
 
 ## Instructions
 
@@ -24,11 +24,12 @@ argument-hint: PROMPT="<your question or task>"
 #   --include-dir "dir1,dir2"            for directories
 #   Combine both if needed
 npx codefetch --max-tokens 50000 \
+  --output codefetch/codebase.md \
   --include-files "src/auth/**/*,src/api/**/*" \
   --include-dir "src/utils"
 
 # 2) Ask Oracle via Browser (no API key; macOS + Chrome)
-npx -y @steipete/oracle --engine browser -m gpt-5-pro \
+npx -y @steipete/oracle --engine browser -m gpt-5.1-pro \
   -p "$PROMPT" \
   --file codefetch/codebase.md
 
