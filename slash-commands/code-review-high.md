@@ -1,5 +1,10 @@
+---
+description: Comprehensive high-level code review focusing on correctness, security, performance, and integration
+argument-hint: TASK=<change-description>
+---
+
 <task>
-$1
+$TASK
 </task>
 
 <role>

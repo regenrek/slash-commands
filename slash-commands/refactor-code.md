@@ -1,5 +1,10 @@
+---
+description: Refactor code with a specific goal, keeping changes isolated
+argument-hint: GOAL=<refactoring-goal-description>
+---
+
 <refactoring_goal>
-$1
+$GOAL
 </refactoring_goal>
 
 Task: <refactoring_goal>

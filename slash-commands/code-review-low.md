@@ -1,5 +1,10 @@
+---
+description: Lightweight code review focusing on code smells, security, performance, and test coverage
+argument-hint: TASK=<change-description>
+---
+
 <task>
-$1
+$TASK
 </task>
 
 ## Role

@@ -1,5 +1,10 @@
+---
+description: Analyze a problem by locating affected files, root cause, and proposing minimal fixes
+argument-hint: PROBLEM=<problem-description>
+---
+
 <problem>
-$1
+$PROBLEM
 </problem>
 
 Tasks:

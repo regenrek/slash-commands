@@ -1,4 +1,9 @@
-Kill processes on port(s): $1 (default: 3000)
+---
+description: Kill processes running on a specific port
+argument-hint: PORT=<port-number>
+---
+
+Kill processes on port(s): $PORT (default: 3000)
 
 Steps:
 1. Identify process: lsof -ti:$PORT (macOS/Linux) or netstat -ano | findstr :$PORT (Windows)
