@@ -20,6 +20,9 @@ A curated collection of AI-powered slash commands for code review, problem analy
 🤖 `/ask-gpt-pro-browser` - Ask GPT-5 Pro via browser (no API key)  
 🌐 `/ask-gpt-pro-api` - Ask GPT-5 Pro via API  
 🎬 `/ask-pro-directors-cut` - Use Cursor Agent + codefetch + GPT-5 Pro  
+🔮 `/ask-oracle` - Use Oracle CLI to copy code bundle for debugging  
+⚛️ `/solidjs-rules` - Comprehensive SolidJS coding rules  
+🧹 `/component-cleanup` - SolidJS component size and structure rules  
 
 ## Installation
 
@@ -243,6 +246,64 @@ Advanced workflow that combines Cursor Agent (composer-1), codefetch, and GPT-5 
 /prompts:ask-pro-directors-cut PROMPT="Review the error handling patterns across the codebase"
 ```
 
+### 11. `ask-oracle`
+Use Oracle CLI to copy code bundle for debugging in ChatGPT. Helps gather relevant files for debug sessions including error locations, stack traces, and recently edited files.
+
+**Features**:
+- Copy code bundle to clipboard for pasting into ChatGPT
+- Support for multiple file patterns and globs
+- Include test files and related components/utils
+- Render and copy bundle in one command
+
+**Usage**: `/ask-oracle [PROMPT="<debug-message>"] [FILES="<file-patterns>"]`
+
+**Examples**:
+```
+/prompts:ask-oracle PROMPT="Debug authentication error" FILES="src/auth/**/*.ts,src/**/*.test.ts"
+
+/prompts:ask-oracle FILES="src/components/Button.tsx,src/utils/helpers.ts"
+```
+
+### 12. `solidjs-rules`
+Comprehensive SolidJS coding rules and best practices covering reactivity, control flow, async patterns, props, styling, file layout, and tooling.
+
+**Features**:
+- Reactivity basics and signal usage
+- Control flow helpers (Show, For, Switch)
+- Async and side effect patterns
+- Component API and prop guidelines
+- Styling conventions
+- File and folder organization
+- ESLint configuration examples
+
+**Usage**: `/solidjs-rules CODEFILES="<code-files-to-review>"`
+
+**Examples**:
+```
+/prompts:solidjs-rules CODEFILES="@Button.tsx @TodoList.tsx"
+
+/prompts:solidjs-rules CODEFILES="src/components/**/*.tsx"
+```
+
+### 13. `component-cleanup`
+SolidJS component size and structure rules for code cleanup. Helps maintain clean, maintainable components by enforcing size limits and structure guidelines.
+
+**Features**:
+- Component size guidelines (150-250 LOC target, 600 LOC hard cap)
+- File naming conventions
+- Component splitting strategies
+- Logic extraction to hooks/utilities
+- JSX nesting limits
+
+**Usage**: `/component-cleanup CODEFILES="<component-files-to-review>"`
+
+**Examples**:
+```
+/prompts:component-cleanup CODEFILES="@UserProfile.tsx"
+
+/prompts:component-cleanup CODEFILES="src/components/**/*.tsx"
+```
+
 ## Workflow Tips
 
 - Use `create-plan` at the start of new tasks to ensure comprehensive planning
@@ -254,6 +315,8 @@ Advanced workflow that combines Cursor Agent (composer-1), codefetch, and GPT-5 
 - Use `ask-pro-directors-cut` for deep codebase analysis with intelligent context gathering
 - Use `ask-gpt-pro-browser` for quick questions without API keys (macOS + Chrome)
 - Use `ask-gpt-pro-api` when you need API-based access to GPT-5 Pro
+- Use `ask-oracle` to quickly gather code bundles for debugging sessions
+- Use `solidjs-rules` and `component-cleanup` when working with SolidJS codebases
 
 ## Links
 
