@@ -23,6 +23,7 @@ A curated collection of AI-powered slash commands for code review, problem analy
 🔮 `/ask-oracle` - Use Oracle CLI to copy code bundle for debugging  
 ⚛️ `/solidjs-rules` - Comprehensive SolidJS coding rules  
 🧹 `/component-cleanup` - SolidJS component size and structure rules  
+✂️ `/token-shorterner` - Minimize token usage while retaining key information  
 
 ## Installation
 
@@ -304,6 +305,25 @@ SolidJS component size and structure rules for code cleanup. Helps maintain clea
 /prompts:component-cleanup CODEFILES="src/components/**/*.tsx"
 ```
 
+### 14. `token-shorterner`
+Minimizes token usage in text while retaining all key information. Aggressively trims text for token savings by removing redundancy and filler, while preserving every key fact, figure, and conclusion. Avoids asterisk formatting to save tokens.
+
+**Key principles**:
+- Trim aggressively for token savings
+- Retain every key fact, figure, and conclusion
+- Remove redundancy and filler
+- Avoid `**` asterisk formatting
+- Every token consumes space in agent token windows
+
+**Usage**: `/token-shorterner TEXT="<text-to-shorten>"`
+
+**Examples**:
+```
+/prompts:token-shorterner TEXT="The authentication system requires users to provide their credentials, including both a username and a password. This is very important for security purposes."
+
+/prompts:token-shorterner TEXT="@long-documentation.md"
+```
+
 ## Workflow Tips
 
 - Use `create-plan` at the start of new tasks to ensure comprehensive planning
@@ -317,6 +337,7 @@ SolidJS component size and structure rules for code cleanup. Helps maintain clea
 - Use `ask-gpt-pro-api` when you need API-based access to GPT-5 Pro
 - Use `ask-oracle` to quickly gather code bundles for debugging sessions
 - Use `solidjs-rules` and `component-cleanup` when working with SolidJS codebases
+- Use `token-shorterner` to optimize text content for AI token windows
 
 ## Links
 
