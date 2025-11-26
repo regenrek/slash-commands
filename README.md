@@ -17,13 +17,11 @@ A curated collection of AI-powered slash commands for code review, problem analy
 ♻️ `/refactor-code` - Start refactoring workflows  
 🔌 `/kill-port` - Kill processes running on specific ports  
 🔎 `/research-better-lib` - Find modern, faster library alternatives  
-🤖 `/ask-gpt-pro-browser` - Ask GPT-5 Pro via browser (no API key)  
-🌐 `/ask-gpt-pro-api` - Ask GPT-5 Pro via API  
-🎬 `/ask-pro-directors-cut` - Use Cursor Agent + codefetch + GPT-5 Pro  
-🔮 `/ask-oracle` - Use Oracle CLI to copy code bundle for debugging  
+📦 `/ask-codefetch` - Gather codebase context into a single markdown file  
+🚀 `/ask-gpt-pro` - Generate codebase, copy to clipboard, and open AI chat  
 ⚛️ `/solidjs-rules` - Comprehensive SolidJS coding rules  
 🧹 `/component-cleanup` - SolidJS component size and structure rules  
-✂️ `/token-shorterner` - Minimize token usage while retaining key information  
+✂️ `/short-tokens` - Minimize token usage while retaining key information  
 
 ## Installation
 
@@ -202,70 +200,72 @@ A comprehensive template for evaluating alternatives to baseline libraries. Help
 /research-better-lib "lodash utility functions ramda remeda"
 ```
 
-### 9. `ask-gpt-pro-browser` & `ask-gpt-pro-api`
-Query GPT-5 Pro with codebase context using codefetch. These commands help you ask complex questions about your codebase with full context.
-
-**`ask-gpt-pro-browser`**: Uses browser automation (no API key required, macOS + Chrome)
-- Research codebase to identify relevant files/directories
-- Generate context with codefetch (50k token limit)
-- Query GPT-5 Pro via browser engine
-
-**`ask-gpt-pro-api`**: Uses OpenAI API (requires OPENAI_API_KEY)
-- Same workflow as browser version
-- Requires API key for authentication
-
-**Usage**: `/ask-gpt-pro-browser PROMPT="<your-question>"` or `/ask-gpt-pro-api PROMPT="<your-question>"`
-
-**Examples**:
-```
-/prompts:ask-gpt-pro-browser PROMPT="Review the authentication logic for security issues"
-
-/prompts:ask-gpt-pro-api PROMPT="Explain how the caching layer works"
-```
-
-### 10. `ask-pro-directors-cut`
-Advanced workflow that combines Cursor Agent (composer-1), codefetch, and GPT-5 Pro for comprehensive codebase analysis. Uses intelligent context discovery before querying GPT-5 Pro.
+### 9. `ask-codefetch`
+Gather narrowed codebase context using codefetch into a single markdown file. Research relevant files/directories, generate scoped context, and use the output file as context.
 
 **Workflow**:
-1. Cursor Agent analyzes codebase and identifies affected files
-2. Extract file patterns from analysis
-3. Generate context with codefetch using identified files
-4. Query GPT-5 Pro with detailed analysis
+1. Research: identify relevant files/directories for the task
+2. Generate: run codefetch with scoped files → single .md file
+3. Read: use `codefetch/codebase.md` as context (not individual files)
 
 **Features**:
-- Intelligent file discovery via Cursor Agent
-- Detailed problem summary and affected files
-- Full context passed to GPT-5 Pro
-- No API key required (browser engine)
+- Single consolidated markdown file output
+- Scoped file inclusion with globs and directories
+- Token limits and encoding options
+- Project tree visualization
+- Extension filtering and exclusion patterns
 
-**Usage**: `/ask-pro-directors-cut PROMPT="<your-question>"`
+**Usage**: `/ask-codefetch [PROMPT="<task-description>"]`
 
 **Examples**:
+```bash
+# Generate context file
+npx codefetch --max-tokens 50000 \
+  --output codefetch/codebase.md \
+  --token-encoder o200k \
+  --project-tree 3 \
+  --include-files "src/auth/**/*.ts,src/api/**/*.ts" \
+  --include-dir "src/utils"
 ```
-/prompts:ask-pro-directors-cut PROMPT="Analyze the performance bottlenecks in the authentication system"
 
-/prompts:ask-pro-directors-cut PROMPT="Review the error handling patterns across the codebase"
-```
+### 10. `ask-codefetch-pro`
+Generate codebase with codefetch, copy to clipboard, and automatically open AI chat. Streamlined workflow for quick codebase analysis.
 
-### 11. `ask-oracle`
-Use Oracle CLI to copy code bundle for debugging in ChatGPT. Helps gather relevant files for debug sessions including error locations, stack traces, and recently edited files.
+**Workflow**:
+1. Research: identify relevant files/directories for the task
+2. Run: codefetch open with scoped files → copies to clipboard, opens browser
+3. Paste: codebase in clipboard, paste into AI chat
 
 **Features**:
-- Copy code bundle to clipboard for pasting into ChatGPT
-- Support for multiple file patterns and globs
-- Include test files and related components/utils
-- Render and copy bundle in one command
+- Automatic clipboard copy
+- Browser opening with AI chat (ChatGPT, Gemini, Claude)
+- Custom chat URLs and models
+- Copy-only mode (no browser)
+- Same scoping options as `ask-codefetch`
 
-**Usage**: `/ask-oracle [PROMPT="<debug-message>"] [FILES="<file-patterns>"]`
+**Usage**: `/ask-codefetch-pro [PROMPT="<task-description>"]`
 
 **Examples**:
-```
-/prompts:ask-oracle PROMPT="Debug authentication error" FILES="src/auth/**/*.ts,src/**/*.test.ts"
+```bash
+# ChatGPT (default)
+npx codefetch open --max-tokens 50000 \
+  --token-encoder o200k \
+  --project-tree 3 \
+  --include-files "src/**/*.ts"
 
-/prompts:ask-oracle FILES="src/components/Button.tsx,src/utils/helpers.ts"
+# Gemini
+npx codefetch open --chat-url gemini.google.com --chat-model gemini-3.0 \
+  --max-tokens 50000 --include-files "src/**/*.ts"
+
+# Claude
+npx codefetch open --chat-url claude.ai --chat-model claude-3.5-sonnet \
+  --max-tokens 50000 --include-files "src/**/*.ts"
+
+# Copy only (no browser)
+npx codefetch open --no-browser --max-tokens 50000 --include-files "src/**/*.ts"
 ```
 
-### 12. `solidjs-rules`
+### 11. `solidjs-rules`
 Comprehensive SolidJS coding rules and best practices covering reactivity, control flow, async patterns, props, styling, file layout, and tooling.
 
 **Features**:
@@ -286,7 +286,7 @@ Comprehensive SolidJS coding rules and best practices covering reactivity, contr
 /prompts:solidjs-rules CODEFILES="src/components/**/*.tsx"
 ```
 
-### 13. `component-cleanup`
+### 12. `component-cleanup`
 SolidJS component size and structure rules for code cleanup. Helps maintain clean, maintainable components by enforcing size limits and structure guidelines.
 
 **Features**:
@@ -305,7 +305,7 @@ SolidJS component size and structure rules for code cleanup. Helps maintain clea
 /prompts:component-cleanup CODEFILES="src/components/**/*.tsx"
 ```
 
-### 14. `token-shorterner`
+### 13. `short-tokens`
 Minimizes token usage in text while retaining all key information. Aggressively trims text for token savings by removing redundancy and filler, while preserving every key fact, figure, and conclusion. Avoids asterisk formatting to save tokens.
 
 **Key principles**:
@@ -315,13 +315,13 @@ Minimizes token usage in text while retaining all key information. Aggressively 
 - Avoid `**` asterisk formatting
 - Every token consumes space in agent token windows
 
-**Usage**: `/token-shorterner TEXT="<text-to-shorten>"`
+**Usage**: `/short-tokens TEXT="<text-to-shorten>"`
 
 **Examples**:
 ```
-/prompts:token-shorterner TEXT="The authentication system requires users to provide their credentials, including both a username and a password. This is very important for security purposes."
+/prompts:short-tokens TEXT="The authentication system requires users to provide their credentials, including both a username and a password. This is very important for security purposes."
 
-/prompts:token-shorterner TEXT="@long-documentation.md"
+/prompts:short-tokens TEXT="@long-documentation.md"
 ```
 
 ## Workflow Tips
@@ -332,12 +332,10 @@ Minimizes token usage in text while retaining all key information. Aggressively 
 - Use `code-review-low` after implementing features for quick validation
 - Use `code-review-high` for major changes or before releases
 - Combine `problem-analyzer` with debugging sessions for faster issue resolution
-- Use `ask-pro-directors-cut` for deep codebase analysis with intelligent context gathering
-- Use `ask-gpt-pro-browser` for quick questions without API keys (macOS + Chrome)
-- Use `ask-gpt-pro-api` when you need API-based access to GPT-5 Pro
-- Use `ask-oracle` to quickly gather code bundles for debugging sessions
+- Use `ask-codefetch` to gather codebase context into a single markdown file
+- Use `ask-codefetch-pro` for quick codebase analysis with automatic clipboard and browser opening
 - Use `solidjs-rules` and `component-cleanup` when working with SolidJS codebases
-- Use `token-shorterner` to optimize text content for AI token windows
+- Use `short-tokens` to optimize text content for AI token windows
 
 ## Links
 
