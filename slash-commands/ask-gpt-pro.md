@@ -1,8 +1,4 @@
 ---
-description: Generate codebase with codefetch, copy to clipboard, and open AI chat
-argument-hint: [PROMPT=<task-description>]
----
----
 description: Quick codefetch workflow - run help first, then generate and open AI chat
 argument-hint: [PROMPT=<path-to-prompt-file>]
 ---
