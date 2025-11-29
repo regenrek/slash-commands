@@ -2,53 +2,60 @@
 description: Generate codebase with codefetch, copy to clipboard, and open AI chat
 argument-hint: [PROMPT=<task-description>]
 ---
+---
+description: Quick codefetch workflow - run help first, then generate and open AI chat
+argument-hint: [PROMPT=<path-to-prompt-file>]
+---
 
-# Ask Codefetch Pro
+# Ask Codefetch Quick
 
-Generate codebase, copy to clipboard, open AI chat.
+Generate codebase with prompt file, copy to clipboard, open AI chat.
+
+## Key Concepts
+
+- **PROMPT** (`-p`): The task/question file (e.g., `docs/arch/02-decision.md`) - codefetch reads this file and includes it
+- **CODE FILES** (`--include-files`, `--include-dir`): Relevant source code for context
+- **MODEL**: Always use `gpt-5-1-pro` (default) - do NOT change to gpt-4o
 
 ## Workflow
 
-1. Research: identify relevant files/directories for PROMPT
-2. Run: codefetch open with scoped files → copies to clipboard, opens browser
-3. Paste: codebase in clipboard, paste into AI chat
+1. **Identify PROMPT file**: The markdown file describing the task/question
+2. **Identify CODE files**: Source files relevant to the prompt (crates, components, etc.)
+3. **Run codefetch open**: Combines prompt + code → clipboard → browser
 
-## Run
+## Example
 
 ```bash
-# ChatGPT (default)
-npx codefetch open --max-tokens 50000 \
-  --token-encoder o200k \
-  --project-tree 3 \
-  --include-files "src/**/*.ts"
+# PROMPT = docs/arch/02-ask-architect-spezi-planr-decision.md
+# CODE = relevant crates for planning architecture
 
-# Gemini
-npx codefetch open --chat-url gemini.google.com --chat-model gemini-3.0 \
-  --max-tokens 50000 --include-files "src/**/*.ts"
-
-# Claude
-npx codefetch open --chat-url claude.ai --chat-model claude-3.5-sonnet \
-  --max-tokens 50000 --include-files "src/**/*.ts"
-
-# Copy only (no browser)
-npx codefetch open --no-browser --max-tokens 50000 --include-files "src/**/*.ts"
+npx codefetch@latest open \
+  -p docs/arch/02-ask-architect-spezi-planr-decision.md \
+  --include-dir crates/spezi-orchestrator,crates/spezi-core \
+  --include-files "crates/spezi-engine/src/lib.rs" \
+  -t 2
 ```
 
-## Options
+## Command Structure
 
-Chat:
-- --chat-url <url> (default: chatgpt.com)
-- --chat-model <model> (default: gpt-5-1-pro)
-- --chat-prompt <text>
-- --no-browser (copy only)
+```bash
+npx codefetch@latest open \
+  -p <PROMPT_FILE>              # Task/question markdown file
+  --include-dir <dirs>          # Relevant code directories
+  --include-files <patterns>    # Specific code files
+  -t <depth>                    # Project tree depth (0-3)
+  --max-tokens 50000            # Token limit (optional)
+```
 
-Scope:
-- --include-files "pattern1,pattern2"
-- --include-dir "dir1,dir2"
-- --exclude-dir "test,dist"
-- --exclude-markdown
-- -e .ts,.js
+## Help Commands
 
-Tokens:
-- --max-tokens 50000
-- --project-tree 3
+```bash
+npx codefetch --help
+npx codefetch open --help
+```
+
+## Remember
+
+- `-p` = PROMPT (the question/task file)
+- `--include-*` = CODE (context for the question)
+- Model = `gpt-5-1-pro` (never change this)
